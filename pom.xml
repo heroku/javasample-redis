@@ -27,7 +27,7 @@
                     <generateRepository>false</generateRepository>
                     <programs>
                         <program>
-                            <mainClass>RedisSample</mainClass>
+                            <mainClass>com.heroku.javasampleredis.SimpleRedis</mainClass>
                             <name>redisSample</name>
                         </program>
                     </programs>

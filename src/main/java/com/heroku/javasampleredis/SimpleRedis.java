@@ -1,3 +1,5 @@
+package com.heroku.javasampleredis;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,7 +9,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.Protocol;
 
-public class RedisSample {
+public class SimpleRedis {
     
     static JedisPool jedisPool;
     

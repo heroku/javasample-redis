@@ -28,7 +28,7 @@
                     <programs>
                         <program>
                             <mainClass>com.heroku.javasampleredis.SimpleRedis</mainClass>
-                            <name>redisSample</name>
+                            <name>simpleRedis</name>
                         </program>
                     </programs>
                 </configuration>

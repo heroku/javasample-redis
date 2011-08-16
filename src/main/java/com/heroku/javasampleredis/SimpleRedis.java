@@ -22,8 +22,7 @@ public class SimpleRedis {
             port = dbUri.getPort();
 
             if (dbUri.getUserInfo() != null) {
-                String[] userInfos = dbUri.getUserInfo().split(":");
-                password = userInfos[1];
+                password = dbUri.getUserInfo().split(":")[1];
             }
         }
         catch (URISyntaxException e) {

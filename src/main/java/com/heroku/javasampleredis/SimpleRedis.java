@@ -4,26 +4,34 @@ import org.apache.commons.pool.impl.GenericObjectPool.Config;
 
 import redis.clients.jedis.*;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class SimpleRedis {
     
     private static final JedisPool jedisPool;
     
     static {
-        final Pattern redisUrlPattern = Pattern.compile("^redis://([^:]*):([^@]*)@([^:]*):([^/]*)(/)?");
-        final Matcher redisUrlMatcher = redisUrlPattern.matcher(System.getenv("REDISTOGO_URL"));
-        redisUrlMatcher.matches();
+        String host = null;
+        int port = -1;
+        String password = null;
 
-        final String host = redisUrlMatcher.group(3);
-        final int port = Integer.parseInt(redisUrlMatcher.group(4));
-        final String password = redisUrlMatcher.group(2);
+        try {
+            final URI dbUri = new URI(System.getenv("REDISTOGO_URL"));
+            host = dbUri.getHost();
+            port = dbUri.getPort();
 
-        final Config config = new Config();
-        config.testOnBorrow = true;
+            if (dbUri.getUserInfo() != null) {
+                String[] userInfos = dbUri.getUserInfo().split(":");
+                password = userInfos[1];
+            }
+        }
+        catch (URISyntaxException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
 
-        jedisPool = new JedisPool(config, host, port, Protocol.DEFAULT_TIMEOUT, password);
+        jedisPool = new JedisPool(new Config(), host, port, Protocol.DEFAULT_TIMEOUT, password);
     }
 
     public static void main(String[] args) {
